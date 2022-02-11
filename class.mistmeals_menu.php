@@ -8,7 +8,7 @@ Class MistMealsMenu {
         'manage_options', // Capability
         plugin_dir_path(__FILE__).'views/view.mistmeals.php', // Slug
         null, // Function del contenido
-        plugins_url( 'mistmeals/img/mistmeals_icon.png' ), // Icono
+        plugins_url( 'mistmeals-wordpress-plugin/img/mistmeals_icon.png' ), // Icono
         56, //Priority
     );
   }
