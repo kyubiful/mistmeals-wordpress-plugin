@@ -34,7 +34,7 @@ add_action('admin_menu', array("MistMealsMenu",'add_mistmeals_to_menu'));
 
 function add_bootstrap ($hook) {
 
-  if($hook != 'mistmeals/views/view.mistmeals.php'){
+  if($hook != 'mistmeals-wordpress-plugin/views/view.mistmeals.php'){
     return;
   }
 
@@ -45,7 +45,7 @@ function add_bootstrap ($hook) {
 
 function add_mistmeals_js ($hook) {
 
-  if($hook != 'mistmeals/views/view.mistmeals.php'){
+  if($hook != 'mistmeals-wordpress-plugin/views/view.mistmeals.php'){
     return;
   }
 
