@@ -5,7 +5,7 @@ jQuery(document).ready(($) => {
   for(let i=0; i<btn_nutrients_modal.length; i++){
 
     let btn = document.querySelector('#'+btn_nutrients_modal[i].id);
-    let closeBtn = document.querySelector(btn.getAttribute("data-target"))
+    let closeBtn = document.querySelector('#'+btn.getAttribute("data-close"))
     
     btn.addEventListener('click', () => {
       $(btn.getAttribute("data-target")).modal("show")
