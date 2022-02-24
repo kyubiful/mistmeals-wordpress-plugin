@@ -9,7 +9,7 @@ Class MistMeals {
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
       `ID` BIGINT UNSIGNED NOT NULL auto_increment,
-      `plato_id` BIGINT UNSIGNED NOT NULL ,
+      `plato_id` BIGINT UNSIGNED NOT NULL UNIQUE ,
       `energia` FLOAT,
       `calorias` FLOAT,
       `proteinas` FLOAT,
