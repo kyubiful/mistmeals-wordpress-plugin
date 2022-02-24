@@ -1,5 +1,5 @@
 window.onload = () => {
-  jQuery(document).ready( function(){
+  jQuery(document).ready( ($) => {
     let mm_submit_button = document.querySelectorAll('.mm-submit-nutrition')
 
     for(let i = 0; i<mm_submit_button.length; i++) {
@@ -16,6 +16,8 @@ window.onload = () => {
             formData.append(input.namespaceURI, input.value)
         })
 
+        $('.modal-'+mm_submit_button[i].value).modal('hide')
+
         jQuery.ajax({
           url: '/wp-admin/admin-ajax.php?action=send_mm_data',
           method: 'POST',
@@ -23,10 +25,10 @@ window.onload = () => {
           processData: false,
           contentType: false,
           success: (res) => {
-              console.log(res)
+              console.log('save success')
           },
           error: (res) => {
-              console.log(res)
+              console.log('error at save')
           }
         })
       })

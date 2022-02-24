@@ -18,6 +18,8 @@ Class MistMeals {
       `carbohidratos` FLOAT,
       `azucar` FLOAT,
       `fibra` FLOAT,
+      `tamano` CHAR,
+      `codigo` VARCHAR(4),
       PRIMARY KEY (`ID`),
       FOREIGN KEY (`plato_id`) REFERENCES wp_posts(`ID`)
     );";

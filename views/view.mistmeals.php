@@ -2,10 +2,17 @@
   global $wpdb;
   $prefix = $wpdb->prefix;
   $table = $prefix . 'posts';
+  $nutrients_table = $prefix.'mm_nutrientes';
 
-  $query = "SELECT ID, post_title, post_status FROM $table 
+  /* $query = "SELECT ID, post_title, post_status FROM $table 
     WHERE ( post_type LIKE 'product_variation')
-    AND (post_status LIKE 'publish' OR post_status LIKE 'private') ORDER BY ID;";
+    AND (post_status LIKE 'publish' OR post_status LIKE 'private') ORDER BY ID;"; */
+
+  $query = "SELECT wp_posts.ID, wp_posts.post_title, wp_posts.post_status, wp_posts.post_type, wp_mm_nutrientes.energia, wp_mm_nutrientes.calorias, wp_mm_nutrientes.proteinas, wp_mm_nutrientes.grasas, wp_mm_nutrientes.saturadas, wp_mm_nutrientes.carbohidratos, wp_mm_nutrientes.azucar, wp_mm_nutrientes.fibra, wp_mm_nutrientes.tamano, wp_mm_nutrientes.codigo FROM $table
+  LEFT JOIN $nutrients_table ON $table.ID = $nutrients_table.plato_id
+  WHERE ( wp_posts.post_type LIKE 'product_variation')
+  AND (wp_posts.post_status LIKE 'publish' OR wp_posts.post_status LIKE 'draft' OR wp_posts.post_status LIKE 'private') ORDER BY ID;";
+
   $product_variations_list = $wpdb->get_results($query, ARRAY_A);
 
   $query = "SELECT ID, post_title, post_status FROM $table 
@@ -86,18 +93,16 @@
    
     $product_variations_id = $product['ID'];
     $product_name = $product['post_title'];
-    $table = $prefix . 'mm_nutrientes';
-    $query = "SELECT * FROM $table WHERE id LIKE $product_variations_id";
-    $product_mm = $wpdb->get_results($query, ARRAY_A);
-
-    $product_mm_energia = $product_mm['energia'] ?? 0;
-    $product_mm_calorias = $product_mm['calorias'] ?? 0;
-    $product_mm_proteinas = $product_mm['proteinas'] ?? 0;
-    $product_mm_grasas = $product_mm['grasas'] ?? 0;
-    $product_mm_saturadas = $product_mm['saturadas'] ?? 0;
-    $product_mm_carbohidratos = $product_mm['carbohidratos'] ?? 0;
-    $product_mm_azucar = $product_mm['azucar'] ?? 0;
-    $product_mm_fibra = $product_mm['fibra'] ?? 0;
+    $product_mm_energia = $product['energia'] ?? 0;
+    $product_mm_calorias = $product['calorias'] ?? 0;
+    $product_mm_proteinas = $product['proteinas'] ?? 0;
+    $product_mm_grasas = $product['grasas'] ?? 0;
+    $product_mm_saturadas = $product['saturadas'] ?? 0;
+    $product_mm_carbohidratos = $product['carbohidratos'] ?? 0;
+    $product_mm_azucar = $product['azucar'] ?? 0;
+    $product_mm_fibra = $product['fibra'] ?? 0;
+    $product_mm_tamano = $product['tamano'] ?? 'M';
+    $product_mm_codigo = $product['codigo'] ?? '1A';
 
 
     echo "
@@ -154,11 +159,29 @@
             </div> 
             <div class='row'>
               <div class='form-group col-6'> 
+                <label for='tamano'>Tamaño</label>
+                <select class='form-control' name='tamano' placeholder='Tamaño' value='$product_mm_tamano'/>
+                  <option>M</option>
+                  <option>L</option>
+                </select>
+              </div>
+              <div class='form-group col-6'> 
+                <label for='codigo'>Código</label>
+                <select class='form-control' name='codigo' placeholder='Código' value='$product_mm_codigo'/>
+                  <option>1A</option>
+                  <option>2A</option>
+                  <option>1B</option>
+                  <option>2B</option>
+                </select>
+              </div>  
+            </div> 
+            <div class='row'>
+              <div class='form-group col-6'> 
                 <input class='form-control' type='hidden' name='product_id' value='$product_variations_id'/>
               </div> 
             </div> 
             <div class='d-flex justify-content-end mt-2'>
-              <button class='btn btn-primary mm-submit-nutrition' type='submit' value='$product_variations_id'>Guardar</button>
+              <button class='btn btn-primary mm-submit-nutrition_$product_variations_id mm-submit-nutrition' type='submit' value='$product_variations_id'>Guardar</button>
             </div>
             </form>
           </div>
