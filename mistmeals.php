@@ -40,7 +40,7 @@ function add_bootstrap ($hook) {
 
   wp_enqueue_script( 'bootstrapJs', plugins_url('/bootstrap/js/bootstrap.min.js',__FILE__),array('jquery'));
   wp_enqueue_style( 'bootstrapCss', plugins_url('/bootstrap/css/bootstrap.min.css',__FILE__));
-
+  
 }
 
 function add_mistmeals_js ($hook) {
@@ -48,12 +48,13 @@ function add_mistmeals_js ($hook) {
   if($hook != 'mistmeals-wordpress-plugin/views/view.mistmeals.php'){
     return;
   }
-
+  wp_enqueue_script( 'mistmealsJs', plugins_url('/js/mistmeals_view.js', __FILE__));
   wp_enqueue_script( 'mistmealsNutrientsJS', plugins_url('/js/mistmeals_add_nutrients.js',__FILE__),array('jquery'));
-
+ 
 }
 
 add_action('admin_enqueue_scripts', 'add_bootstrap');
 add_action('admin_enqueue_scripts', 'add_mistmeals_js');
+add_action('wp_ajax_send_mm_data', array("MistMealsAjax", "mm_form_ajax"));
 
 ?>
