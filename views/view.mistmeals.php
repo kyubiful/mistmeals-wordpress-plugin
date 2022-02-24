@@ -88,7 +88,17 @@
     $product_name = $product['post_title'];
     $table = $prefix . 'mm_nutrientes';
     $query = "SELECT * FROM $table WHERE id LIKE $product_variations_id";
-    $product = $wpdb->get_results($query, ARRAY_A);
+    $product_mm = $wpdb->get_results($query, ARRAY_A);
+
+    $product_mm_energia = $product_mm['energia'] ?? 0;
+    $product_mm_calorias = $product_mm['calorias'] ?? 0;
+    $product_mm_proteinas = $product_mm['proteinas'] ?? 0;
+    $product_mm_grasas = $product_mm['grasas'] ?? 0;
+    $product_mm_saturadas = $product_mm['saturadas'] ?? 0;
+    $product_mm_carbohidratos = $product_mm['carbohidratos'] ?? 0;
+    $product_mm_azucar = $product_mm['azucar'] ?? 0;
+    $product_mm_fibra = $product_mm['fibra'] ?? 0;
+
 
     echo "
     <div class='modal modal-$product_variations_id fade' id='addNutrientsModal-$product_variations_id' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
@@ -101,51 +111,56 @@
           </div>
           <div class='modal-body'>
             <p>$product_name</p>
-            <table>
+            <form id='form_mm_$product_variations_id'>
             <div class='row'>
               <div class='form-group col-6'> 
                 <label for='energia'>Energía</label>
-                <input class='form-control' type='number' name='energia' placeholder='Energía' value=''/>
+                <input class='form-control' type='number' name='energia' placeholder='Energía' value='$product_mm_energia'/>
               </div> 
               <div class='form-group col-6'> 
                 <label for='energia'>Calorías</label>
-                <input class='form-control' type='number' name='calorias' placeholder='Calorías' value=''/>
+                <input class='form-control' type='number' name='calorias' placeholder='Calorías' value='$product_mm_calorias'/>
               </div> 
             </div> 
             <div class='row'>
               <div class='form-group col-6'> 
                 <label for='energia'>Proteínas</label>
-                <input class='form-control' type='number' name='proteinas' placeholder='Proteínas' value=''/>
+                <input class='form-control' type='number' name='proteinas' placeholder='Proteínas' value='$product_mm_proteinas'/>
               </div> 
               <div class='form-group col-6'> 
                 <label for='energia'>Grasas</label>
-                <input class='form-control' type='number' name='grasas' placeholder='Grasas' value=''/>
+                <input class='form-control' type='number' name='grasas' placeholder='Grasas' value='$product_mm_grasas'/>
               </div> 
             </div> 
             <div class='row'>
               <div class='form-group col-6'> 
                 <label for='energia'>Saturadas</label>
-                <input class='form-control' type='number' name='saturadas' placeholder='Saturadas' value=''/>
+                <input class='form-control' type='number' name='saturadas' placeholder='Saturadas' value='$product_mm_saturadas'/>
               </div> 
               <div class='form-group col-6'> 
                 <label for='energia'>Carbohidratos</label>
-                <input class='form-control' type='number' name='carbohidratos' placeholder='Carbohidratos' value=''/>
+                <input class='form-control' type='number' name='carbohidratos' placeholder='Carbohidratos' value='$product_mm_carbohidratos'/>
               </div> 
             </div> 
             <div class='row'>
               <div class='form-group col-6'> 
                 <label for='energia'>Azucar</label>
-                <input class='form-control' type='number' name='azucar' placeholder='Azucar' value=''/>
+                <input class='form-control' type='number' name='azucar' placeholder='Azucar' value='$product_mm_azucar'/>
               </div> 
               <div class='form-group col-6'> 
                 <label for='energia'>Fibra</label>
-                <input class='form-control' type='number' name='fibra' placeholder='Fibra' value=''/>
+                <input class='form-control' type='number' name='fibra' placeholder='Fibra' value='$product_mm_fibra'/>
+              </div> 
+            </div> 
+            <div class='row'>
+              <div class='form-group col-6'> 
+                <input class='form-control' type='hidden' name='product_id' value='$product_variations_id'/>
               </div> 
             </div> 
             <div class='d-flex justify-content-end mt-2'>
-              <button class='btn btn-primary' type='submit' value='$product_variations_id'>Guardar</button>
+              <button class='btn btn-primary mm-submit-nutrition' type='submit' value='$product_variations_id'>Guardar</button>
             </div>
-            </table>
+            </form>
           </div>
         </div>
       </div>
